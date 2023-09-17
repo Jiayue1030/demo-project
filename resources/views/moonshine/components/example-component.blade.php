@@ -13,20 +13,6 @@
                 <td x-text="user.email"></td>
             </tr>
         </template>
-
-        <script>
-            function fetchUsers() {
-                return {
-                    users: [],
-                    init() {
-                        fetch('{{ route('moonshine.fetch-users') }}')
-                            .then(response => response.json())
-                            .then(data => {
-                                this.users = data
-                            })
-                    }
-                }
-            }
-        </script>
+    
     </x-slot:tbody>
 </x-moonshine::table>

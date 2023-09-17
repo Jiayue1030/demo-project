@@ -22,7 +22,7 @@ class Dashboard extends DashboardScreen
 		return [
             DashboardBlock::make([
                 TextBlock::make(
-                    'Welcome to MoonShine!',
+                    'Long Time Service Valution',
                     'Demo version'
                 )
             ]),

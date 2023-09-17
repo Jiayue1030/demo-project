@@ -43,7 +43,7 @@ return [
         'mark_as_read' => 'Mark as read',
     ],
     'login' => [
-        'title' => 'Welcome to :moonshine_title!',
+        'title' => ':moonshine_title',
         'description' => 'Please sign-in to your account',
         'authorization' => 'Authorization',
         'remember_me' => 'Remember me',
@@ -66,6 +66,7 @@ return [
         'admins_title' => 'Admins',
         'role_title' => 'Roles',
         'role_name' => 'Title',
+        'employee' => 'Employee',
 
         'main_information' => 'Main information',
         'change_password' => 'Change password',
