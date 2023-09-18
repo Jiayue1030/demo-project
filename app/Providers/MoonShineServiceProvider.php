@@ -12,6 +12,7 @@ use App\MoonShine\Resources\MoonShineUserRoleResource;
 use App\MoonShine\Resources\SettingResource;
 use App\MoonShine\Resources\UserResource;
 use App\MoonShine\Resources\EmployeeResource;
+use App\MoonShine\Resources\ProjectResource;
 use App\Models\Employee;
 use App\Models\Project;
 use Illuminate\Support\ServiceProvider;
@@ -32,7 +33,7 @@ class MoonShineServiceProvider extends ServiceProvider
                 return auth('moonshine')->user()->moonshine_user_role_id === 1;
             }),
 
-            MenuItem::make('Projects', new CategoryResource(), 'heroicons.outline.document'),
+            MenuItem::make('Projects', new ProjectResource(), 'heroicons.outline.document'),
 
             // MenuItem::make('Employees', new MoonShineUserResource(), 'heroicons.outline.users'),
 

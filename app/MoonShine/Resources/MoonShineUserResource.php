@@ -63,14 +63,14 @@ class MoonShineUserResource extends Resource
                             ->required()
                             ->showOnExport(),
 
-                        Image::make(trans('moonshine::ui.resource.avatar'), 'avatar')
-                            ->showOnExport()
-                            ->disk('public')
-                            ->dir('moonshine_users')
-                            ->allowedExtensions(['jpg', 'png', 'jpeg', 'gif']),
+                        // Image::make(trans('moonshine::ui.resource.avatar'), 'avatar')
+                        //     ->showOnExport()
+                        //     ->disk('public')
+                        //     ->dir('moonshine_users')
+                        //     ->allowedExtensions(['jpg', 'png', 'jpeg', 'gif']),
 
                         Date::make(trans('moonshine::ui.resource.created_at'), 'created_at')
-                            ->format("d.m.Y")
+                            ->format("Y-m-d")
                             ->default(now()->toDateTimeString())
                             ->sortable()
                             ->hideOnForm()
@@ -80,10 +80,6 @@ class MoonShineUserResource extends Resource
                             ->sortable()
                             ->showOnExport()
                             ->required(),
-                    ]),
-
-                    Tab::make(trans('moonshine::ui.resource.password'), [
-                        Heading::make('Change password'),
 
                         Password::make(trans('moonshine::ui.resource.password'), 'password')
                             ->customAttributes(['autocomplete' => 'new-password'])
@@ -92,6 +88,10 @@ class MoonShineUserResource extends Resource
                         PasswordRepeat::make(trans('moonshine::ui.resource.repeat_password'), 'password_repeat')
                             ->customAttributes(['autocomplete' => 'confirm-password'])
                             ->hideOnIndex(),
+                    ]),
+
+                    Tab::make('Activity Logs', [
+                        Heading::make('Check Your Activty Logs'),
                     ]),
                 ]),
             ])
@@ -109,9 +109,9 @@ class MoonShineUserResource extends Resource
     public function itemActions(): array
     {
         return [
-            ItemAction::make('Login as', function (MoonshineUser $item) {
-                auth(config('moonshine.auth.guard'))->login($item);
-            }, 'Success')->icon('users')
+            // ItemAction::make('Login as', function (MoonshineUser $item) {
+            //     auth(config('moonshine.auth.guard'))->login($item);
+            // }, 'Success')->icon('users')
         ];
     }
 
@@ -135,7 +135,7 @@ class MoonShineUserResource extends Resource
 
     public function search(): array
     {
-        return ['id', 'name'];
+        return ['id', 'name','email'];
     }
 
     public function filters(): array

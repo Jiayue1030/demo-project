@@ -229,8 +229,7 @@ class ArticleResource extends Resource
             HasMany::make('Comments')
                 ->hideOnIndex()
                 ->resourceMode(),
-
-
+                
             HasOne::make('Comment')
                 ->hideOnIndex()
                 ->resourceMode()

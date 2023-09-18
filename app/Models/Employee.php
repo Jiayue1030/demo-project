@@ -4,20 +4,32 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Employee extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
-    protected $fillable = ['title', 'category_id'];
+    protected $table = 'employees';
 
-    public function category(): BelongsTo
-    {
-        return $this->belongsTo(self::class);
-    }
+    protected $fillable = [
+        'name', 
+        'staff_no',
+        'project_id',
+        'gender',
+        'status',
+        'birthday',
+        'date_of_join',
+        'monthly_income',
+        'bonus',
+        'adjusted_monthly_income',
+        'monthly_wage',
+        'gratuities_paid',
+        'mandatory_mpf_benefits',
+        'voluntary_mpf_benefits',
+        'employer_contribution',
+        'department',
+    ];
 
-    public function articles(): BelongsToMany
-    {
-        return $this->belongsToMany(Article::class);
-    }
+
 }

@@ -20,6 +20,7 @@ class CommentResource extends Resource
 	public static string $title = 'Comments';
 
     public static array $with = ['user', 'article'];
+    
 	public function fields(): array
 	{
 		return [

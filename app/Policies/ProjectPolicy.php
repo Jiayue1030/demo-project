@@ -4,91 +4,50 @@ namespace App\Policies;
 
 use App\Models\Project;
 use App\Models\User;
+use MoonShine\Models\MoonShineUser;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class ProjectPolicy
 {
     use HandlesAuthorization;
 
-    /**
-     * Determine whether the user can view any models.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function viewAny(User $user)
+    public function viewAny(MoonshineUser $user)
     {
-        //
+        return true;
     }
 
-    /**
-     * Determine whether the user can view the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Project  $project
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function view(User $user, Project $project)
+    public function view(MoonshineUser $user, Project $item)
     {
-        //
+        return $user->moonshine_user_role_id === 1 ||$user->id === $item->author_id;
     }
 
-    /**
-     * Determine whether the user can create models.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function create(User $user)
+    public function create(MoonshineUser $user)
     {
-        //
+        return true;
     }
 
-    /**
-     * Determine whether the user can update the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Project  $project
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function update(User $user, Project $project)
+    public function update(MoonshineUser $user, Project $item)
     {
-        //
+        return $user->moonshine_user_role_id === 1 ||$user->id === $item->author_id;
     }
 
-    /**
-     * Determine whether the user can delete the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Project  $project
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function delete(User $user, Project $project)
+    public function delete(MoonshineUser $user, Project $item)
     {
-        //
+        return $user->moonshine_user_role_id === 1;
     }
 
-    /**
-     * Determine whether the user can restore the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Project  $project
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function restore(User $user, Project $project)
+    public function restore(MoonshineUser $user, Project $item)
     {
-        //
+        return $user->moonshine_user_role_id === 1;
     }
 
-    /**
-     * Determine whether the user can permanently delete the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Project  $project
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function forceDelete(User $user, Project $project)
+    public function forceDelete(MoonshineUser $user, Project $item)
     {
-        //
+        return $user->moonshine_user_role_id === 1;
+    }
+
+    public function massDelete(MoonshineUser $user)
+    {
+        return false;
     }
 }

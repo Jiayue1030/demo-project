@@ -1,93 +1,85 @@
 <?php
 
-declare(strict_types=1);
-
 namespace App\MoonShine\Resources;
 
+use App\Models\Employee;
+use App\MoonShine\Controllers\UserFetchController;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Validation\Rule;
-use MoonShine\Actions\ExportAction;
 use MoonShine\Decorations\Block;
-use MoonShine\Decorations\Heading;
-use MoonShine\Decorations\Tab;
-use MoonShine\Decorations\Tabs;
-use MoonShine\Fields\BelongsTo;
-use MoonShine\Fields\Date;
+use MoonShine\Decorations\Column;
+use MoonShine\Decorations\Grid;
 use MoonShine\Fields\Email;
 use MoonShine\Fields\ID;
-use MoonShine\Fields\Image;
 use MoonShine\Fields\Password;
 use MoonShine\Fields\PasswordRepeat;
 use MoonShine\Fields\Text;
-use MoonShine\Filters\TextFilter;
-use MoonShine\FormComponents\PermissionFormComponent;
-use MoonShine\Http\Controllers\PermissionController;
-use MoonShine\ItemActions\ItemAction;
-use App\Models\Employee;
-use MoonShine\Models\MoonshineUserRole;
 use MoonShine\Resources\Resource;
 
 class EmployeeResource extends Resource
 {
     public static string $model = Employee::class;
 
-	public static string $title = 'Employee';
+    public static string $title = 'Employees';
 
-    public string $titleField = 'title';
+    public string $titleField = 'name';
 
-    public static bool $withPolicy = true;
-
-    protected bool $createInModal = true;
-
-    protected bool $editInModal = true;
-
-    public static array $with = ['employee'];
-
-    public static string $orderField = 'sorting';
-
-    public function treeKey(): ?string
+    public function fields(): array
     {
-        return 'employee_id';
-    }
+        return [
+            Grid::make([
+                Column::make([
+                    Block::make('Contact information', [
+                        ID::make()->sortable(),
+                        Text::make('Name'),
+                        Email::make('E-mail', 'email'),
+                    ]),
 
-    public function sortKey(): string
-    {
-        return 'sorting';
-    }
+                    Block::make('Change password', [
+                        Password::make('Password')
+                            ->customAttributes(['autocomplete' => 'new-password'])
+                            ->hideOnIndex(),
 
-	public function fields(): array
-	{
-		return [
-            Block::make('', [
-                ID::make()->sortable(),
-                BelongsTo::make('Employee')
-                    ->nullable(),
-                Text::make('Name')->required(),
-            ])
+                        PasswordRepeat::make('Password repeat')
+                            ->customAttributes(['autocomplete' => 'confirm-password'])
+                            ->hideOnIndex(),
+                    ]),
+                ]),
+            ]),
         ];
-	}
+    }
 
-	public function rules(Model $item): array
-	{
-	    return [
-            'title' => ['required', 'string', 'min:5'],
+    public function rules(Model $item): array
+    {
+        return [
+            'name' => 'required',
+            'email' => 'sometimes|bail|required|email|unique:Employees,email' . ($item->exists ? ",$item->id" : ''),
+            'password' => ! $item->exists
+                ? 'required|min:6|required_with:password_repeat|same:password_repeat'
+                : 'sometimes|nullable|min:6|required_with:password_repeat|same:password_repeat',
         ];
     }
 
     public function search(): array
     {
-        return ['id', 'title'];
+        return ['id','name','staff_no'];
     }
 
     public function filters(): array
     {
-        return [
-            TextFilter::make('Employee')
-        ];
+        return [];
     }
 
     public function actions(): array
     {
         return [];
+    }
+
+    public function resolveRoutes(): void
+    {
+        parent::resolveRoutes();
+
+        Route::get('fetch-Employees', EmployeeFetchController::class)
+            ->name('fetch-Employees');
     }
 }

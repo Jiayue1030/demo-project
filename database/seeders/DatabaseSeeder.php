@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Author'
         ]);
 
-        Article::factory(100)->create();
+        Article::factory(10)->create();
 
         DB::table('settings')->insert([
             'id' => 1,

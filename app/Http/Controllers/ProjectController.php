@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Project;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View;
 
 class ProjectController extends Controller
 {
@@ -13,9 +15,16 @@ class ProjectController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): View\Factory|View\View|Application
     {
-        //
+        $projects = Project::query()
+            ->with(['client_id', 'valuation_target','ref_num','valuation_date'])
+            ->latest()
+            ->paginate(10);
+
+        return view('projects.index', [
+            'projects' => $projects
+        ]);
     }
 
     /**
@@ -45,9 +54,9 @@ class ProjectController extends Controller
      * @param  \App\Models\Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function show(Project $project)
+    public function show(Article $article): View\Factory|View\View|Application
     {
-        //
+        return view('projects.show', compact('projects'));
     }
 
     /**
