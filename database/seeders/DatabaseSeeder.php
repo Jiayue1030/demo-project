@@ -29,5 +29,16 @@ class DatabaseSeeder extends Seeder
             'phone' => fake()->e164PhoneNumber(),
             'copyright' => now()->year
         ]);
+
+        $admin = User::create([
+            'fullname' => 'Admin',
+            'email'    => 'admin@admin.com',
+            'status'   => 'active',
+            'superadmin' => 1,
+            'password' => Hash::make('password')
+        ]);
+        $admin->setPassword('password');
+
+        $statement = "ALTER TABLE staff AUTO_INCREMENT = 100;";
     }
 }

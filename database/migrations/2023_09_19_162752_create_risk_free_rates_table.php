@@ -13,22 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('projected_lives', function (Blueprint $table) {
+        Schema::create('risk_free_rates', function (Blueprint $table) {
             $table->id();
-            $table->enum('gender',['M','F'])->default('M');
             $table->integer('year');
-            $table->integer('x')->default(0);
-            $table->decimal('qx',32,8);
-            $table->integer('lx');
-            $table->integer('dx');
-            $table->integer('l_x');
-            $table->integer('t_x');
-            $table->decimal('ex',32,2);
+            $table->integer('year_x');
+            $table->decimal('yield',32,3);
             $table->integer('project_id')->nullable();
             $table->integer('created_by')->nullable();
             $table->ipaddress('ipaddress')->nullable();
-            $table->timestamps();
             $table->softDeletes($column = 'deleted_at', $precision = 0);
+            $table->timestamps();
         });
     }
 
@@ -39,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('projected_lives');
+        Schema::dropIfExists('risk_free_rates');
     }
 };

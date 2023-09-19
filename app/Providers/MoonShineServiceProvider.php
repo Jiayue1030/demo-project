@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Models\Comment;
+
 use App\MoonShine\Resources\ArticleResource;
 use App\MoonShine\Resources\CategoryResource;
 use App\MoonShine\Resources\CommentResource;
@@ -13,8 +13,14 @@ use App\MoonShine\Resources\SettingResource;
 use App\MoonShine\Resources\UserResource;
 use App\MoonShine\Resources\EmployeeResource;
 use App\MoonShine\Resources\ProjectResource;
+use App\MoonShine\Resources\ProjectedLifeResource;
+use App\MoonShine\Resources\RiskFreeRateResource;
+
+use App\Models\Comment;
 use App\Models\Employee;
 use App\Models\Project;
+use App\Models\ProjectedLife;
+
 use Illuminate\Support\ServiceProvider;
 use MoonShine\MoonShine;
 use MoonShine\Menu\MenuGroup;
@@ -40,8 +46,8 @@ class MoonShineServiceProvider extends ServiceProvider
             MenuGroup::make('General Information', [
                 MenuItem::make('Termination Rate', new CategoryResource(), 'heroicons.outline.document'),
                 MenuItem::make('Wage Index', new ArticleResource(), 'heroicons.outline.newspaper'),
-                MenuItem::make('Risk Free Rate', new CategoryResource(), 'heroicons.outline.document'),
-                MenuItem::make('Projected Life', new ArticleResource(), 'heroicons.outline.newspaper'),
+                MenuItem::make('Risk Free Rate', new RiskFreeRateResource(), 'heroicons.outline.chart-pie'),
+                MenuItem::make('Projected Life', new ProjectedLifeResource(), 'heroicons.outline.chart-bar'),
             ], 'heroicons.outline.newspaper'),
 
             MenuGroup::make('Employees', [

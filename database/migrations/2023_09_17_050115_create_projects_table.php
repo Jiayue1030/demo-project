@@ -27,6 +27,7 @@ return new class extends Migration
             $table->enum('status',['disabled','ongoing','done'])->default('ongoing');
             $table->integer('created_by')->nullable();
             $table->integer('discount_rate')->nullable();
+            $table->decimal('wage_growth',32,2)->default(0);
             $table->ipaddress('ipaddress');
             $table->timestamps();
             $table->softDeletes($column = 'deleted_at', $precision = 0);

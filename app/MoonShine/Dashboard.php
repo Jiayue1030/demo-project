@@ -15,15 +15,20 @@ use MoonShine\Metrics\DonutChartMetric;
 use MoonShine\Metrics\LineChartMetric;
 use MoonShine\Metrics\ValueMetric;
 
+use Illuminate\Support\Facades\Auth;
+
 class Dashboard extends DashboardScreen
 {
 	public function blocks(): array
 	{
+        $user = Auth::id();
+        // dd($user);
 		return [
             DashboardBlock::make([
                 TextBlock::make(
                     'Long Time Service Valution',
-                    'Demo version'
+                    'Demo version',
+                    $user
                 )
             ]),
 

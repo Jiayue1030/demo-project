@@ -77,9 +77,9 @@ class EmployeeResource extends Resource
 
     public function resolveRoutes(): void
     {
-        parent::resolveRoutes();
+        // parent::resolveRoutes();
 
-        Route::get('fetch-Employees', EmployeeFetchController::class)
-            ->name('fetch-Employees');
+        // Route::get('fetch-Employees', EmployeeFetchController::class)
+        //     ->name('fetch-Employees');
     }
 }

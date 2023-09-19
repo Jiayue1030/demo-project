@@ -8,7 +8,7 @@ return [
 	'logo' => env('MOONSHINE_LOGO', ''),
 
     'route' => [
-        'prefix' => env('MOONSHINE_ROUTE_PREFIX', 'admin'),
+        'prefix' => env('MOONSHINE_ROUTE_PREFIX','admin'),
         'middleware' => ['moonshine'],
         'custom_page_slug' => 'custom_page',
         'notFoundHandler' => MoonShineNotFoundException::class

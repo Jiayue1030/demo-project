@@ -68,7 +68,11 @@ class CategoryResource extends TreeResource
     public function filters(): array
     {
         return [
-            TextFilter::make('Title')
+            SelectFilter::make('Year', 'year')
+                ->options([
+                    'value 1' => 'Option Label 1',
+                    'value 2' => 'Option Label 2'
+                ])
         ];
     }
 
