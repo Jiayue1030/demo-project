@@ -44,19 +44,19 @@ class MoonShineServiceProvider extends ServiceProvider
             // MenuItem::make('Employees', new MoonShineUserResource(), 'heroicons.outline.users'),
 
             MenuGroup::make('General Information', [
-                MenuItem::make('Termination Rate', new CategoryResource(), 'heroicons.outline.document'),
+                MenuItem::make('Termination Rate', new DictionaryResource(), 'heroicons.outline.document'),
                 MenuItem::make('Wage Index', new ArticleResource(), 'heroicons.outline.newspaper'),
                 MenuItem::make('Risk Free Rate', new RiskFreeRateResource(), 'heroicons.outline.chart-pie'),
                 MenuItem::make('Projected Life', new ProjectedLifeResource(), 'heroicons.outline.chart-bar'),
             ], 'heroicons.outline.newspaper'),
 
             MenuGroup::make('Employees', [
-                MenuItem::make('Employee Information', new CategoryResource(), 'heroicons.outline.users'),
+                MenuItem::make('Employee Information', new EmployeeResource(), 'heroicons.outline.users'),
                 MenuItem::make('PV of LSP and Current Service Cost', new ArticleResource(), 'heroicons.outline.newspaper'),
                 MenuItem::make('Current Service', new CategoryResource(), 'heroicons.outline.document'),
                 MenuItem::make('Opening Balance', new ArticleResource(), 'heroicons.outline.newspaper'),
                 MenuItem::make('Long-Service Payment', new CategoryResource(), 'heroicons.outline.document'),
-                MenuItem::make('Employee Summary', new ArticleResource(), 'heroicons.outline.newspaper'),
+                // MenuItem::make('Employee Summary', new EmployeeResource(), 'heroicons.outline.newspaper'),
             ], 'heroicons.outline.newspaper'),
 
 

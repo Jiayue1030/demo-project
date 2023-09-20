@@ -90,7 +90,7 @@ class MoonShineUserResource extends Resource
                             ->hideOnIndex(),
                     ]),
 
-                    Tab::make('Activity Logs', [
+                    Tab::make('Change Logs', [
                         Heading::make('Check Your Activty Logs'),
                     ]),
                 ]),
