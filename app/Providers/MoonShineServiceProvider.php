@@ -15,6 +15,7 @@ use App\MoonShine\Resources\EmployeeResource;
 use App\MoonShine\Resources\ProjectResource;
 use App\MoonShine\Resources\ProjectedLifeResource;
 use App\MoonShine\Resources\RiskFreeRateResource;
+use App\MoonShine\Resources\MpfBalanceResource;
 
 use App\Models\Comment;
 use App\Models\Employee;
@@ -44,8 +45,9 @@ class MoonShineServiceProvider extends ServiceProvider
             // MenuItem::make('Employees', new MoonShineUserResource(), 'heroicons.outline.users'),
 
             MenuGroup::make('General Information', [
-                MenuItem::make('Termination Rate', new DictionaryResource(), 'heroicons.outline.document'),
-                MenuItem::make('Wage Index', new ArticleResource(), 'heroicons.outline.newspaper'),
+                MenuItem::make('Termination Rate', new CommentResource(), 'heroicons.outline.document'),
+                MenuItem::make('Wage Index', new UserResource(), 'heroicons.outline.newspaper'),
+                MenuItem::make('MPF Balance', new MpfBalanceResource(), 'heroicons.outline.chart-pie'),
                 MenuItem::make('Risk Free Rate', new RiskFreeRateResource(), 'heroicons.outline.chart-pie'),
                 MenuItem::make('Projected Life', new ProjectedLifeResource(), 'heroicons.outline.chart-bar'),
             ], 'heroicons.outline.newspaper'),

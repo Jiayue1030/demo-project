@@ -55,7 +55,7 @@ class ProjectedLifeResource extends Resource
          */
 		return [
 		    Block::make('', [
-                ID::make()->sortable()->useOnImport(),
+                ID::make()->sortable()->showOnExport(),
                 Select::make('Gender', 'gender')
                     ->options([
                         'M' => 'Male',

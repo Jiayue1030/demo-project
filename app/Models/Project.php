@@ -26,4 +26,8 @@ class Project extends Model
         'created_by',
         'discount_rate',
     ];
+
+    // public function client(){
+    //     return $this->belongsTo(MoonshineUser::class);
+    // }
 }

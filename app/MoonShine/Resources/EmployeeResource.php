@@ -52,13 +52,6 @@ class EmployeeResource extends Resource
                         Text::make('Employee Num','staff_no')
                             ->required()
                             ->showOnExport()->useOnImport(),
-                        // Date::make('Created At', 'created_at')
-                        //     ->format("Y-m-d")
-                        //     ->default(now()->toDateTimeString())
-                        //     ->sortable()
-                        //     ->hideOnForm()
-                        //     ->required()
-                        //     ->showOnExport(),
                         Select::make('Gender','gender')
                             ->options(['M'=>'Male','F'=>'Female'])
                             ->sortable()
@@ -111,16 +104,13 @@ class EmployeeResource extends Resource
                             ->required()->showOnExport()->useOnImport(),
                         Number::make('Created By', 'created_by')
                             ->default(auth()->user()->id)
-                            ->hideOnIndex()
+                            ->hideOnIndex()->hideOnDetail()
                             ->disabled()->hidden(),
                         Text::make('ipaddress', 'ipaddress')
                             ->default(request()->getClientIp())
-                            ->hideOnIndex()
+                            ->hideOnIndex()->hideOnDetail()
                             ->disabled()->hidden(),
-                        Number::make('Monthly Income (=Max(A,B))')
-                            ->
                     ]),
-
                     Tab::make('Activity Logs', [
                         Heading::make('Check Your Activty Logs'),
                     ]),

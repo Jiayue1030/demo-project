@@ -184,7 +184,7 @@ class ArticleResource extends Resource
                             ->fullPage(),
                     ]),
 
-                    /* Block::make([
+                    Block::make([
                          HasOne::make('Comment')
                              ->fields([
                                  ID::make()->sortable(),
@@ -195,7 +195,7 @@ class ArticleResource extends Resource
                              ->removable()
                              ->hideOnIndex()
                              ->fullPage()
-                     ]),*/
+                     ]),
 
                     Block::make('Seo and categories', [
                         Tabs::make([
@@ -239,10 +239,10 @@ class ArticleResource extends Resource
     public function components(): array
     {
         return [
-            ExampleIndexComponent::make('Example IndexComponent'),
+            ExampleIndexComponent::make('什么意思'),
             ExampleFormComponent::make('Example FormComponent'),
             ExampleDetailComponent::make('Example DetailComponent'),
-            ChangeLogFormComponent::make('ChangeLog'),
+            ChangeLogFormComponent::make('ChangeLog','Change Log is here'),
         ];
     }
 

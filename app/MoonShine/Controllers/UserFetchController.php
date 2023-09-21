@@ -16,4 +16,11 @@ final class UserFetchController extends Controller
             User::all()
         );
     }
+
+    //如果employee的table那里要display自己算的东西
+    /**
+     * 
+     * 需要define一个MoonShine/Controllers/EmployeeController
+     * 需要define一个index component?
+     */
 }

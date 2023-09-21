@@ -33,7 +33,6 @@ class UserResource extends Resource
                         ID::make()->sortable(),
                         Text::make('Name'),
                         Email::make('E-mail', 'email'),
-                        Text::make('Testing','testing'),
                     ]),
 
                     Block::make('Change password', [

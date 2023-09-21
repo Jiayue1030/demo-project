@@ -3,15 +3,17 @@
 namespace App\MoonShine\Resources;
 
 use App\Models\Project;
+use App\MoonShine\Resources\MoonShineUserResource;
 use App\MoonShine\AbstractResources\SeparateResource;
 use App\MoonShine\FieldSets\DictionaryFormFields;
 use App\MoonShine\FieldSets\DictionaryIndexFields;
 use Illuminate\Database\Eloquent\Model;
-
 use MoonShine\Decorations\Block;
 use MoonShine\Fields\Image;
 use MoonShine\Fields\Text;
 use MoonShine\Fields\TinyMce;
+use MoonShine\Fields\BelongsTo; 
+
 use MoonShine\Filters\TextFilter;
 use MoonShine\Resources\Resource;
 use MoonShine\Fields\ID;
@@ -42,12 +44,8 @@ class ProjectResource extends SeparateResource
         return [
             Block::make('Create A Project', [
                 ID::make()->sortable()->showOnExport(),
-                
-                Select::make('Client', 'client_id')
-                ->options([
-                    'value 1' => 'Option Label 2',
-                    'value 2' => 'Option Label 2'
-                ]),
+                // BelongsTo::make('Client', 'client_id', new MoonShineUserResource())
+                //     ->searchable(),
                 Text::make('Project Name')->required()->showOnExport(),
             ])
         ];
