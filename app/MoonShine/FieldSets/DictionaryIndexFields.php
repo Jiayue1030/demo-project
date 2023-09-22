@@ -15,8 +15,9 @@ final class DictionaryIndexFields
     public function __invoke(Resource $resource): array
     {
         return [
-            Text::make('Title')->required(),
-            Text::make('Slug')->required(),
+            Text::make('Project Name','name')->required(),
+            Text::make('Valuation','valuation_target')->required(),
+            
         ];
     }
 }

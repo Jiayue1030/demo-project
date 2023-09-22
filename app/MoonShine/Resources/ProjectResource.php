@@ -11,13 +11,17 @@ use Illuminate\Database\Eloquent\Model;
 use MoonShine\Decorations\Block;
 use MoonShine\Fields\Image;
 use MoonShine\Fields\Text;
-use MoonShine\Fields\TinyMce;
+use MoonShine\Fields\Date;
+use MoonShine\Fields\Enum;
+use MoonShine\Fields\Number;
+// use MoonShine\Fields\TinyMce;
 use MoonShine\Fields\BelongsTo; 
 
 use MoonShine\Filters\TextFilter;
 use MoonShine\Resources\Resource;
 use MoonShine\Fields\ID;
 use MoonShine\Fields\Select;
+use MoonShine\Decorations\Flex;
 
 class ProjectResource extends SeparateResource
 {
@@ -31,40 +35,86 @@ class ProjectResource extends SeparateResource
     {
         // return (new DictionaryIndexFields)($this);
         return [
-            Block::make('', [
-                ID::make()->sortable()->showOnExport(),
-                Text::make(trans('moonshine::ui.resource.role_name'), 'name')
-                    ->required()->showOnExport(),
-            ])
+            Text::make('Project Title', 'name'),
+            Text::make('Valuation Target','valuation_target'),
+            Text::make('Ref Num','ref_num'),
+            Date::make('Valuation Date','valuation_date'),
         ];
     }
 
     public function formFields(): array
     {
         return [
-            Block::make('Create A Project', [
+            Block::make('', [
                 ID::make()->sortable()->showOnExport(),
-                // BelongsTo::make('Client', 'client_id', new MoonShineUserResource())
-                //     ->searchable(),
-                Text::make('Project Name')->required()->showOnExport(),
+                //TODO: figure out how to select users account with is_client flag..
+                Select::make('Client','client_id')
+                    ->options(
+                        [4=>'Client A',5=>'Client B']
+                    )->required()->showOnExport(),
+                Text::make('Project Title', 'name')
+                    ->required()->showOnExport(),
+                Text::make('Valuation Target','valuation_target')
+                    ->default('Long Service Payment Valuation')
+                    ->required()->showOnExport(),
+                Text::make('Ref Num','ref_num')
+                    ->nullable()->showOnExport(),
+                Date::make('Valuation Date','valuation_date')
+                    ->default(now()->toDateTimeString())
+                    ->showOnExport(),
+                Flex::make([
+                    Number::make('Sum Long Service Payment','sum_long_service_payment')
+                        ->min(1)->step(0.01)
+                        ->nullable()->showOnExport(),
+                    Number::make('Max Long Service Payment','max_long_service_payment')
+                        ->min(1)->step(0.01)
+                        ->nullable()->showOnExport(),
+                    Number::make('Max Monthly Employer Contribution','max_monthly_employer_contribution')
+                        ->min(1)->step(0.01)
+                        ->nullable()->showOnExport(),
+                ]),
+                Flex::make([
+                    Number::make('Net Annual Return MPF Asset','net_annual_return_mpfasset')
+                        ->min(1)->step(0.01)
+                        ->nullable()->showOnExport(),
+                    Number::make('Discount Rate','discount_rate')
+                        ->min(1)->step(0.01)
+                        ->nullable()->showOnExport(),
+                    Number::make('Wage Growth','wage_growth')
+                        ->min(1)->step(0.01)
+                        ->nullable()->showOnExport(),
+                ]),
+                
+                Enum::make('Status','status')->options([
+                    'disabled'=>'Disabled',
+                    'ongoing'=>'Ongoing',
+                    'done'=>'Done'])
+                    ->default('ongoing')->showOnExport(),
+                
+                Number::make('Created By', 'created_by')
+                    ->default(auth()->user()->id)
+                    ->hideOnIndex()->hideOnDetail()
+                    ->disabled()->hidden(),
+                Text::make('ipaddress', 'ipaddress')
+                    ->default(request()->getClientIp())
+                    ->hideOnIndex()->hideOnDetail()
+                    ->disabled()->hidden(),
             ])
         ];
+        return [];
     }
 
     public function detailFields(): array
     {
         return [
-            ID::make(),
-            Text::make('Title2')->required(),
+            // ID::make(),
+            // Text::make('Title2')->required(),
         ];
     }
 
 	public function rules(Model $item): array
 	{
 	    return [
-            'title' => ['required', 'string', 'min:1'],
-            'slug' => ['required', 'string', 'min:1'],
-            'description' => ['required', 'string', 'min:1'],
         ];
     }
 

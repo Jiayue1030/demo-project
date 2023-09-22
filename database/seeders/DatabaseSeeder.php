@@ -30,15 +30,11 @@ class DatabaseSeeder extends Seeder
             'copyright' => now()->year
         ]);
 
-        $admin = User::create([
-            'fullname' => 'Admin',
-            'email'    => 'admin@admin.com',
-            'status'   => 'active',
-            'superadmin' => 1,
-            'password' => Hash::make('password')
-        ]);
-        $admin->setPassword('password');
-
-        $statement = "ALTER TABLE staff AUTO_INCREMENT = 100;";
+        // DB::table('moonshine_users')->insert(
+        //     [
+        //         'id'=>1,
+        //         'moonshine_user_role_id'
+        //     ]
+        // );
     }
 }
