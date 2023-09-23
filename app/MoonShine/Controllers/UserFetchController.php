@@ -12,6 +12,7 @@ final class UserFetchController extends Controller
 {
     public function __invoke(): JsonResponse
     {
+        dd('halo');
         return response()->json(
             User::all()
         );

@@ -15,6 +15,12 @@ return new class extends Migration
     {
         Schema::create('wage_indices', function (Blueprint $table) {
             $table->id();
+            $table->integer('year');
+            $table->integer('month');
+            $table->enum('type',['m','i','t','a','fi','re','pb','ps','all'])->default('m');
+            $table->decimal('index',32,3)->nullable();
+            $table->integer('created_by');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
