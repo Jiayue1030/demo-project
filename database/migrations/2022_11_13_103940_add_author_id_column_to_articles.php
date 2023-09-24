@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::table('articles', function (Blueprint $table) {
             $table->foreignId('author_id')
                 ->nullable()
-                ->constrained('moonshine_users')
+                ->constrained('users')
                 ->nullOnDelete()
                 ->cascadeOnUpdate();
         });

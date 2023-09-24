@@ -9,12 +9,25 @@ use Illuminate\Support\Facades\Route;
 use MoonShine\Decorations\Block;
 use MoonShine\Decorations\Column;
 use MoonShine\Decorations\Grid;
+use MoonShine\Decorations\Tab;
+use MoonShine\Decorations\Tabs;
+use MoonShine\Decorations\Heading;
 use MoonShine\Fields\Email;
 use MoonShine\Fields\ID;
 use MoonShine\Fields\Password;
 use MoonShine\Fields\PasswordRepeat;
 use MoonShine\Fields\Text;
 use MoonShine\Resources\Resource;
+use MoonShine\Fields\BelongsTo;
+use MoonShine\Fields\Date;
+use MoonShine\Fields\Image;
+use MoonShine\Filters\TextFilter;
+use MoonShine\FormComponents\PermissionFormComponent;
+use MoonShine\Http\Controllers\PermissionController;
+use MoonShine\ItemActions\ItemAction;
+
+use MoonShine\Models\MoonshineUser;
+use MoonShine\Models\MoonshineUserRole;
 
 class UserResource extends Resource
 {
@@ -26,26 +39,78 @@ class UserResource extends Resource
 
     public function fields(): array
     {
-        return [
-            Grid::make([
-                Column::make([
-                    Block::make('Contact information', [
-                        ID::make()->sortable(),
-                        Text::make('Name'),
-                        Email::make('E-mail', 'email'),
-                    ]),
+        // return [
+        //     Grid::make([
+        //         Column::make([
+        //             Block::make('Contact information', [
+        //                 ID::make()->sortable(),
+        //                 Text::make('Name'),
+        //                 Email::make('E-mail', 'email'),
+        //             ]),
 
-                    Block::make('Change password', [
-                        Password::make('Password')
+        //             Block::make('Change password', [
+        //                 Password::make('Password')
+        //                     ->customAttributes(['autocomplete' => 'new-password'])
+        //                     ->hideOnIndex(),
+
+        //                 PasswordRepeat::make('Password repeat')
+        //                     ->customAttributes(['autocomplete' => 'confirm-password'])
+        //                     ->hideOnIndex(),
+        //             ]),
+        //         ]),
+        //     ]),
+        // ];
+        return [
+            Block::make('', [
+                Tabs::make([
+                    Tab::make('Main', [
+                        ID::make()
+                            ->sortable()
+                            ->showOnExport(),
+
+                        BelongsTo::make(
+                            trans('moonshine::ui.resource.role'),
+                            'moonshine_user_role_id',
+                            new MoonShineUserRoleResource()
+                        )
+                            ->showOnExport(),
+
+                        Text::make(trans('moonshine::ui.resource.name'), 'name')
+                            ->required()
+                            ->showOnExport(),
+
+                        // Image::make(trans('moonshine::ui.resource.avatar'), 'avatar')
+                        //     ->showOnExport()
+                        //     ->disk('public')
+                        //     ->dir('moonshine_users')
+                        //     ->allowedExtensions(['jpg', 'png', 'jpeg', 'gif']),
+
+                        Date::make(trans('moonshine::ui.resource.created_at'), 'created_at')
+                            ->format("Y-m-d")
+                            ->default(now()->toDateTimeString())
+                            ->sortable()
+                            ->hideOnForm()
+                            ->showOnExport(),
+
+                        Email::make(trans('moonshine::ui.resource.email'), 'email')
+                            ->sortable()
+                            ->showOnExport()
+                            ->required(),
+
+                        Password::make(trans('moonshine::ui.resource.password'), 'password')
                             ->customAttributes(['autocomplete' => 'new-password'])
                             ->hideOnIndex(),
 
-                        PasswordRepeat::make('Password repeat')
+                        PasswordRepeat::make(trans('moonshine::ui.resource.repeat_password'), 'password_repeat')
                             ->customAttributes(['autocomplete' => 'confirm-password'])
                             ->hideOnIndex(),
                     ]),
+
+                    Tab::make('Change Logs', [
+                        Heading::make('Check Your Activty Logs'),
+                    ]),
                 ]),
-            ]),
+            ])
         ];
     }
 

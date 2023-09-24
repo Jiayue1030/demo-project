@@ -6,6 +6,7 @@ use App\Models\Article;
 use App\Models\Setting;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -16,12 +17,22 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('moonshine_user_roles')->insert([
-            'id' => 2,
-            'name' => 'Author'
+        DB::table('users')->insert([
+            'name' => 'Admin',
+            'email' => 'admin@admin.com',
+            'password' => Hash::make('password'),
+            'superadmin' => 1,
+            'user_type' => 'admin',
+            'created_at' => now(),
+            'updated_at' => now(),
+            'role_id' => 1,
         ]);
-
-        Article::factory(10)->create();
+        
+        DB::table('user_roles')->insert(
+            ['id' => 1,'name' => 'Admin'],
+            ['id' => 2,'name' => 'Client'],
+            ['id' => 3,'name' => 'Staff']
+        );
 
         DB::table('settings')->insert([
             'id' => 1,
@@ -29,12 +40,5 @@ class DatabaseSeeder extends Seeder
             'phone' => fake()->e164PhoneNumber(),
             'copyright' => now()->year
         ]);
-
-        // DB::table('moonshine_users')->insert(
-        //     [
-        //         'id'=>1,
-        //         'moonshine_user_role_id'
-        //     ]
-        // );
     }
 }

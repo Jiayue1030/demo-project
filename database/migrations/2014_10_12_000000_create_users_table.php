@@ -19,7 +19,12 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->enum('user_type',['admin','client','staff'])->default('staff');
+            $table->boolean('superadmin')->default(0);
+            $table->integer('role_id')->default(1);
             $table->rememberToken();
+            $table->integer('created_by')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

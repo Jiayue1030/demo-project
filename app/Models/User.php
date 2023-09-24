@@ -7,10 +7,17 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use MoonShine\Traits\Models\HasMoonShineChangeLog;
+use MoonShine\Traits\Models\HasMoonShinePermissions;
+use MoonShine\Traits\Models\HasMoonShineSocialite;
+
+use MoonShine\Models\MoonshineUserRole;
 
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
+    use HasMoonShineChangeLog,HasMoonShinePermissions;
 
     /**
      * The attributes that are mass assignable.
@@ -21,6 +28,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'user_type',
+        'role_id',
+        'created_at'
     ];
 
     /**
@@ -41,4 +51,11 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    protected $with = ['moonshineUserRole'];
+
+    public function moonshineUserRole(): BelongsTo
+    {
+        return $this->belongsTo(MoonshineUserRole::class);
+    }
 }
