@@ -2,6 +2,7 @@
 
 use MoonShine\Exceptions\MoonShineNotFoundException;
 use MoonShine\Models\MoonshineUser;
+use App\Models\User;
 
 return [
     'title' => env('MOONSHINE_TITLE', 'Long Time Service Valuation'),
@@ -13,7 +14,7 @@ return [
         'custom_page_slug' => 'custom_page',
         'notFoundHandler' => MoonShineNotFoundException::class
     ],
-    'use_migrations' => true,
+    'use_migrations' => false,
     'use_notifications' => true,
     'auth' => [
         'enable' => true,
@@ -23,17 +24,21 @@ return [
             'name' => 'name',
             'avatar' => 'avatar'
         ],
-        'guard' => 'moonshine',
+        /* Guard is responsible for authenticating a user. 
+         * It takes some form of input and validate user identity in it. */
+        'guard' => 'admin',
         'guards' => [
-            'moonshine' => [
+            'admin' => [
+                /*How to make the validation is implemented by a driver.*/
                 'driver'   => 'session',
-                'provider' => 'moonshine',
+                /**The driver may use a user provider to retrieve user information.*/
+                'provider' => 'admin',
             ],
         ],
         'providers' => [
-            'moonshine' => [
+            'admin' => [
                 'driver' => 'eloquent',
-                'model'  => MoonshineUser::class,
+                'model'  => User::class,
             ],
         ],
         'footer' => ''

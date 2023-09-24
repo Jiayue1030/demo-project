@@ -13,6 +13,7 @@ use MoonShine\FormComponents\ChangeLogFormComponent;
 
 use MoonShine\Decorations\Heading;
 use MoonShine\Decorations\Block;
+use MoonShine\Decorations\Flex;
 use MoonShine\Decorations\Column;
 use MoonShine\Decorations\Grid;
 use MoonShine\Decorations\Tab;
@@ -47,55 +48,63 @@ class EmployeeResource extends Resource
 
                         ID::make()->sortable()->showOnExport(),
                         //TODO: 1 project can only have 1 unique staff_no
-                        Text::make('Employee Name','name') 
-                            ->showOnExport()->useOnImport(),
-                        Text::make('Employee Num','staff_no')
-                            ->required()
-                            ->showOnExport()->useOnImport(),
-                        Select::make('Gender','gender')
-                            ->options(['M'=>'Male','F'=>'Female'])
-                            ->sortable()
-                            ->required()
-                            ->showOnExport()->useOnImport(),
-                        Date::make('Birthday', 'birthday')
-                            ->format("Y-m-d")
-                            ->default(now()->toDateTimeString())
-                            ->sortable()
-                            ->required()
-                            ->showOnExport()->useOnImport(),
-                        Date::make('Date of Join', 'date_of_join')
-                            ->format("Y-m-d")
-                            ->default(now()->toDateTimeString())
-                            ->sortable()
-                            ->required()
-                            ->showOnExport()->useOnImport(),
-                        Number::make('Monthly Income','monthly_income')
-                            ->sortable()->min(0)->step(0.01)
-                            ->required()->showOnExport()->useOnImport(),
-                        Number::make('Bonus','bonus')
-                            ->sortable()
-                            ->min(0)->step(0.01)
-                            ->default(0)
-                            ->showOnExport()->useOnImport(),
-                        Number::make('Adjusted Monthly Income','adjusted_monthly_income')
-                            ->sortable()
-                            ->min(0)->step(0.01)
-                            ->required()->showOnExport()->useOnImport(),
-                        Number::make('Monthly Wage (Basic)','monthly_wage')
-                            ->sortable()
-                            ->min(0)->step(0.01)
-                            ->required()->showOnExport()->useOnImport(),
-                        Number::make('Gratuities Paid','gratuities_paid')
-                            ->sortable()->default(0)
-                            ->min(0)->step(0.01)
-                            ->showOnExport()->useOnImport(),                        
-                        Number::make('Accrued MPF Benefits Employer\'s Contribution (Mandatory)','mandatory_mpf_benefits')
-                            ->sortable()->min(0)->step(0.01)
-                            ->required()->showOnExport()->useOnImport(),
-                        Number::make('Accrued MPF Benefits Employer\'s Contribution (Voluntary)','voluntary_mpf_benefits')
-                            ->sortable()->default(0)
-                            ->min(0)->step(0.01)
-                            ->required()->showOnExport()->useOnImport(),
+                        Flex::make([
+                            Text::make('Employee Name','name') 
+                                ->showOnExport()->useOnImport(),
+                            Text::make('Employee Num','staff_no')
+                                ->required()
+                                ->showOnExport()->useOnImport(),
+                            Select::make('Gender','gender')
+                                ->options(['M'=>'Male','F'=>'Female'])
+                                ->sortable()
+                                ->required()
+                                ->showOnExport()->useOnImport(),
+                        ]),
+                        Flex::make([
+                            Date::make('Birthday', 'birthday')
+                                ->format("Y-m-d")
+                                ->default(now()->toDateTimeString())
+                                ->sortable()
+                                ->required()
+                                ->showOnExport()->useOnImport(),
+                            Date::make('Date of Join', 'date_of_join')
+                                ->format("Y-m-d")
+                                ->default(now()->toDateTimeString())
+                                ->sortable()
+                                ->required()
+                                ->showOnExport()->useOnImport(),
+                            Number::make('Monthly Income','monthly_income')
+                                ->sortable()->min(0)->step(0.01)
+                                ->required()->showOnExport()->useOnImport()
+                        ]),
+                        Flex::make([
+                            Number::make('Bonus','bonus')
+                                ->sortable()
+                                ->min(0)->step(0.01)
+                                ->default(0)
+                                ->showOnExport()->useOnImport(),
+                            Number::make('Adjusted Monthly Income','adjusted_monthly_income')
+                                ->sortable()
+                                ->min(0)->step(0.01)
+                                ->required()->showOnExport()->useOnImport(),
+                            Number::make('Monthly Wage (Basic)','monthly_wage')
+                                ->sortable()
+                                ->min(0)->step(0.01)
+                                ->required()->showOnExport()->useOnImport()
+                        ]),
+                        Flex::make([
+                            Number::make('Gratuities Paid','gratuities_paid')
+                                ->sortable()->default(0)
+                                ->min(0)->step(0.01)
+                                ->showOnExport()->useOnImport(),                        
+                            Number::make('Accrued MPF Benefits Employer\'s Contribution (Mandatory)','mandatory_mpf_benefits')
+                                ->sortable()->min(0)->step(0.01)
+                                ->required()->showOnExport()->useOnImport(),
+                            Number::make('Accrued MPF Benefits Employer\'s Contribution (Voluntary)','voluntary_mpf_benefits')
+                                ->sortable()->default(0)
+                                ->min(0)->step(0.01)
+                                ->required()->showOnExport()->useOnImport()
+                        ]),
                         Number::make('Employer Contribution for the Reporting Period','employer_contribution')
                             ->sortable()->min(0)->step(0.01)
                             ->required()->showOnExport()->useOnImport(),
@@ -141,12 +150,14 @@ class EmployeeResource extends Resource
             ExportAction::make('Export')
                 ->disk('public')
                 ->dir('exports')
+                ->showInLine()
                 ->queue(),
 
             ImportAction::make('Import')
                 ->disk('public')
                 ->dir('imports')
                 ->deleteAfter()
+                ->showInLine()
                 ->queue()
         ];
     }

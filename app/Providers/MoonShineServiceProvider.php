@@ -17,16 +17,18 @@ use App\MoonShine\Resources\ProjectedLifeResource;
 use App\MoonShine\Resources\RiskFreeRateResource;
 use App\MoonShine\Resources\MpfBalanceResource;
 use App\MoonShine\Resources\WageIndexResource;
+use App\MoonShine\Pages\WageIndex;
 
 use App\Models\Comment;
 use App\Models\Employee;
 use App\Models\Project;
 use App\Models\ProjectedLife;
-
+use MoonShine\Resources\CustomPage; 
 use Illuminate\Support\ServiceProvider;
 use MoonShine\MoonShine;
 use MoonShine\Menu\MenuGroup;
 use MoonShine\Menu\MenuItem;
+
 
 class MoonShineServiceProvider extends ServiceProvider
 {
@@ -38,7 +40,7 @@ class MoonShineServiceProvider extends ServiceProvider
                 MenuItem::make('Admins', new MoonShineUserResource(), 'heroicons.outline.users'),
                 MenuItem::make('Roles', new MoonShineUserRoleResource(), 'heroicons.outline.shield-exclamation'),
             ], 'heroicons.outline.user-group')->canSee(static function () {
-                return auth('moonshine')->user()->moonshine_user_role_id === 1;
+                return auth('admin')->user()->moonshine_user_role_id === 1;
             }),
 
             MenuItem::make('Projects', new ProjectResource(), 'heroicons.outline.document'),
@@ -48,6 +50,7 @@ class MoonShineServiceProvider extends ServiceProvider
             MenuGroup::make('General Information', [
                 MenuItem::make('Termination Rate', new CommentResource(), 'heroicons.outline.document'),
                 MenuItem::make('Wage Index', new WageIndexResource(), 'heroicons.outline.currency-dollar'),
+                // MenuItem::make('Wage Index',CustomPage::make('Wage Index', 'wage_index', 'wage_index.index', fn() => []), 'heroicons.outline.currency-dollar'),
                 MenuItem::make('MPF Balance', new MpfBalanceResource(), 'heroicons.outline.chart-pie'),
                 MenuItem::make('Risk Free Rate', new RiskFreeRateResource(), 'heroicons.outline.chart-pie'),
                 MenuItem::make('Projected Life', new ProjectedLifeResource(), 'heroicons.outline.chart-bar'),
@@ -63,7 +66,7 @@ class MoonShineServiceProvider extends ServiceProvider
             ], 'heroicons.outline.newspaper'),
 
             MenuItem::make('Dictionary', new DictionaryResource(), 'heroicons.outline.document-duplicate'),
-            MenuItem::make('Users', new UserResource(), 'heroicons.outline.document-duplicate'),
+            MenuItem::make('Clients', new UserResource(), 'heroicons.outline.document-duplicate'),
             // MenuItem::make(
             //     'Documentation',
             //     'https://moonshine.cutcode.dev',

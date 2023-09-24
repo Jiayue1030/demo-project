@@ -15,7 +15,7 @@ use MoonShine\Fields\Select;
 use MoonShine\Decorations\Heading;
 use MoonShine\Decorations\Block;
 use MoonShine\Decorations\Flex;
-
+use MoonShine\Metrics\ValueMetric;
 use MoonShine\Actions\ExportAction;
 use MoonShine\Actions\ImportAction;
 use MoonShine\Actions\FiltersAction;
@@ -31,7 +31,7 @@ class WageIndexResource extends SeparateResource
 	public static string $title = 'Wage Index';
 
     public function indexFields():array {
-        return (new WageIndexIndexFields)($this);
+        return $this->formFields();
     }
 
     public function formFields():array {
@@ -74,8 +74,21 @@ class WageIndexResource extends SeparateResource
     }
 
     public function detailFields():array {
-        return (new ExampleDetailComponent)($this);
+        return $this->formFields();
     }
+
+    public function metrics(): array 
+    {
+        //each project could have different wage_index...
+        $end_year = now()->format('Y'); //select year(valuation_date)-1 end_year from project
+        $start_year_dec_index = 0; //select index from wage_indices where type='m' and month=12 and year=$start_year_dec_index
+        $addopted = 0 ; 
+        return [
+            ValueMetric::make('Adopted Annual Wage Growth Rate')
+                ->value($addopted)
+                ->valueFormat('{value}%')
+        ];
+    } 
 
 	public function rules(Model $item): array
 	{
@@ -90,13 +103,12 @@ class WageIndexResource extends SeparateResource
 
     public function filters(): array
     {
-        return ['type','year','month','index'];
+        return [];
     }
 
     public function actions(): array
     {
         return [
-            FiltersAction::make(trans('moonshine::ui.filters')),
             ExportAction::make('Export')
                 ->disk('public')
                 ->dir('exports')->showInLine()
