@@ -39,6 +39,7 @@ class UserResource extends Resource
 
     public function fields(): array
     {
+        //dd(auth()->user());
         // return [
         //     Grid::make([
         //         Column::make([
@@ -64,16 +65,12 @@ class UserResource extends Resource
             Block::make('', [
                 Tabs::make([
                     Tab::make('Main', [
-                        ID::make()
-                            ->sortable()
-                            ->showOnExport(),
-
+                        ID::make()->sortable()->showOnExport(),
                         BelongsTo::make(
                             trans('moonshine::ui.resource.role'),
                             'moonshine_user_role_id',
-                            new MoonShineUserRoleResource()
-                        )
-                            ->showOnExport(),
+                            new UserRoleResource()
+                        )->showOnExport(),
 
                         Text::make(trans('moonshine::ui.resource.name'), 'name')
                             ->required()
@@ -114,6 +111,14 @@ class UserResource extends Resource
         ];
     }
 
+    public function components(): array
+    {
+        return [
+            PermissionFormComponent::make('Permissions')
+                ->canSee(fn($user) => $user->role_id === MoonshineUserRole::DEFAULT_ROLE_ID)
+        ];
+    }
+
     public function rules(Model $item): array
     {
         return [
@@ -127,7 +132,7 @@ class UserResource extends Resource
 
     public function search(): array
     {
-        return ['id'];
+        return ['id', 'name','email'];
     }
 
     public function filters(): array
@@ -140,11 +145,24 @@ class UserResource extends Resource
         return [];
     }
 
+    // public function resolveRoutes(): void
+    // {
+    //     parent::resolveRoutes();
+
+    //     Route::get('fetch-users', UserFetchController::class)
+    //         ->name('fetch-users');
+    // }
+
     public function resolveRoutes(): void
     {
         parent::resolveRoutes();
 
-        Route::get('fetch-users', UserFetchController::class)
-            ->name('fetch-users');
+        Route::prefix('resource')->group(function () {
+            Route::post(
+                "{$this->uriKey()}/{".$this->routeParam()."}/permissions",
+                PermissionController::class
+            )
+                ->name("{$this->routeNameAlias()}.permissions");
+        });
     }
 }

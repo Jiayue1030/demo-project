@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->enum('user_type',['admin','client','staff'])->default('staff');
             $table->boolean('superadmin')->default(0);
             $table->integer('role_id')->default(1);
+            $table->integer('moonshine_user_role_id')->default(1);
             $table->rememberToken();
             $table->integer('created_by')->nullable();
             $table->softDeletes();

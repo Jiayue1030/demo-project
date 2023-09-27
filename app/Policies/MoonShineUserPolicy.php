@@ -4,47 +4,48 @@ namespace App\Policies;
 
 use MoonShine\Models\MoonShineUser;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use App\Models\User;
 
 class MoonShineUserPolicy
 {
     use HandlesAuthorization;
 
-    public function viewAny(MoonShineUser $user): bool
+    public function viewAny(User $user): bool
     {
         return $user->moonshine_user_role_id === 1;
     }
 
-    public function view(MoonShineUser $user, MoonShineUser $moonShineUser): bool
+    public function view(User $user, MoonShineUser $moonShineUser): bool
     {
         return $user->moonshine_user_role_id === 1;
     }
 
-    public function create(MoonShineUser $user): bool
+    public function create(User $user): bool
     {
         return $user->moonshine_user_role_id === 1;
     }
 
-    public function update(MoonShineUser $user, MoonShineUser $moonShineUser): bool
+    public function update(User $user, MoonShineUser $moonShineUser): bool
     {
         return $user->moonshine_user_role_id === 1;
     }
 
-    public function delete(MoonShineUser $user, MoonShineUser $moonShineUser): bool
+    public function delete(User $user, MoonShineUser $moonShineUser): bool
     {
         return $user->moonshine_user_role_id === 1;
     }
 
-    public function restore(MoonShineUser $user, MoonShineUser $moonShineUser): bool
+    public function restore(User $user, MoonShineUser $moonShineUser): bool
     {
         return $user->moonshine_user_role_id === 1;
     }
 
-    public function forceDelete(MoonShineUser $user, MoonShineUser $moonShineUser): bool
+    public function forceDelete(User $user, MoonShineUser $moonShineUser): bool
     {
         return $user->moonshine_user_role_id === 1;
     }
 
-    public function massDelete(MoonShineUser $user): bool
+    public function massDelete(User $user): bool
     {
         return $user->moonshine_user_role_id === 1;
     }

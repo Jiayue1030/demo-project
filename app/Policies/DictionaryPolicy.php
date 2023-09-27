@@ -5,6 +5,7 @@ namespace App\Policies;
 use App\Models\Dictionary;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use MoonShine\Models\MoonshineUser;
+use App\Models\User;
 
 class DictionaryPolicy
 {

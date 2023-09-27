@@ -5,47 +5,48 @@ namespace App\Policies;
 use App\Models\Article;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use MoonShine\Models\MoonshineUser;
+use App\Models\User;
 
 class ArticlePolicy
 {
     use HandlesAuthorization;
 
-    public function viewAny(MoonshineUser $user)
+    public function viewAny(User $user)
     {
         return true;
     }
 
-    public function view(MoonshineUser $user, Article $item)
+    public function view(User $user, Article $item)
     {
         return $user->moonshine_user_role_id === 1 ||$user->id === $item->author_id;
     }
 
-    public function create(MoonshineUser $user)
+    public function create(User $user)
     {
         return true;
     }
 
-    public function update(MoonshineUser $user, Article $item)
+    public function update(User $user, Article $item)
     {
         return $user->moonshine_user_role_id === 1 ||$user->id === $item->author_id;
     }
 
-    public function delete(MoonshineUser $user, Article $item)
+    public function delete(User $user, Article $item)
     {
         return $user->moonshine_user_role_id === 1;
     }
 
-    public function restore(MoonshineUser $user, Article $item)
+    public function restore(User $user, Article $item)
     {
         return $user->moonshine_user_role_id === 1;
     }
 
-    public function forceDelete(MoonshineUser $user, Article $item)
+    public function forceDelete(User $user, Article $item)
     {
         return $user->moonshine_user_role_id === 1;
     }
 
-    public function massDelete(MoonshineUser $user)
+    public function massDelete(User $user)
     {
         return false;
     }

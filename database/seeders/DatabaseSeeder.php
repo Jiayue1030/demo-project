@@ -25,14 +25,15 @@ class DatabaseSeeder extends Seeder
             'user_type' => 'admin',
             'created_at' => now(),
             'updated_at' => now(),
-            'role_id' => 1,
+            'moonshine_user_role_id' => 1,
         ]);
         
-        DB::table('user_roles')->insert(
-            ['id' => 1,'name' => 'Admin'],
-            ['id' => 2,'name' => 'Client'],
-            ['id' => 3,'name' => 'Staff']
-        );
+        DB::table('user_roles')->insert(['id' => 1,'name' => 'Admin']);
+        DB::table('user_roles')->insert(['id' => 2,'name' => 'Client']);
+        DB::table('user_roles')->insert(['id' => 3,'name' => 'Staff']);
+
+        DB::table('moonshine_user_roles')->insert(['id' => 2,'name' => 'Client']);
+        DB::table('moonshine_user_roles')->insert(['id' => 3,'name' => 'Staff']);
 
         DB::table('settings')->insert([
             'id' => 1,

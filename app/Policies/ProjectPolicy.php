@@ -4,49 +4,49 @@ namespace App\Policies;
 
 use App\Models\Project;
 use App\Models\User;
-use MoonShine\Models\MoonShineUser;
+// use MoonShine\Models\MoonshineUser;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class ProjectPolicy
 {
     use HandlesAuthorization;
 
-    public function viewAny(MoonshineUser $user)
+    public function viewAny(User $user)
     {
         return true;
     }
 
-    public function view(MoonshineUser $user, Project $item)
+    public function view(User $user, Project $item)
     {
         return $user->moonshine_user_role_id === 1 ||$user->id === $item->author_id;
     }
 
-    public function create(MoonshineUser $user)
+    public function create(User $user)
     {
         return true;
     }
 
-    public function update(MoonshineUser $user, Project $item)
+    public function update(User $user, Project $item)
     {
         return $user->moonshine_user_role_id === 1 ||$user->id === $item->author_id;
     }
 
-    public function delete(MoonshineUser $user, Project $item)
+    public function delete(User $user, Project $item)
     {
         return $user->moonshine_user_role_id === 1;
     }
 
-    public function restore(MoonshineUser $user, Project $item)
+    public function restore(User $user, Project $item)
     {
         return $user->moonshine_user_role_id === 1;
     }
 
-    public function forceDelete(MoonshineUser $user, Project $item)
+    public function forceDelete(User $user, Project $item)
     {
         return $user->moonshine_user_role_id === 1;
     }
 
-    public function massDelete(MoonshineUser $user)
+    public function massDelete(User $user)
     {
         return false;
     }

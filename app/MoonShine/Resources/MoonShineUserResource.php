@@ -120,7 +120,7 @@ class MoonShineUserResource extends Resource
     {
         return [
             'name' => 'required',
-            'moonshine_user_role_id' => 'required',
+            'role_id' => 'required',
             'email' => [
                 'sometimes',
                 'bail',

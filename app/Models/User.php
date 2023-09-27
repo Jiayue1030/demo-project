@@ -10,8 +10,6 @@ use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use MoonShine\Traits\Models\HasMoonShineChangeLog;
 use MoonShine\Traits\Models\HasMoonShinePermissions;
-use MoonShine\Traits\Models\HasMoonShineSocialite;
-
 use MoonShine\Models\MoonshineUserRole;
 
 class User extends Authenticatable
@@ -29,7 +27,7 @@ class User extends Authenticatable
         'email',
         'password',
         'user_type',
-        'role_id',
+        'moonshine_user_role_id',
         'created_at'
     ];
 
